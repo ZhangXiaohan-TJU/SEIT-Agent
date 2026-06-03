@@ -4,7 +4,8 @@ This repository contains the implementation of **SEIT-Agent**, an experience-mem
 
 > **SEIT-Agent: An Experience Memory Enhanced Inspection and Testing Agent for High-Safety Special Equipment with Risk-Aware LLM Evaluation**
 
-**The manuscript is currently under revision. The complete code will be organized and uploaded after the paper is formally published. Citation information will also be updated after publication.**
+> [!IMPORTANT]
+> **The manuscript is currently under revision. The complete code will be organized and uploaded after the paper is formally published. Citation information will also be updated after publication.**
 
 ## Overview
 
