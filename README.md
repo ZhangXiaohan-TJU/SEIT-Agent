@@ -40,7 +40,7 @@ The project also includes evaluation scripts for grading accuracy and for expert
 | `scripts/`         | Executable entry scripts for running damage mode analysis experiments, quality grading experiments, and evaluation workflows. |
 | `data/`            | Research datasets and knowledge resources, including damage-mode analysis data, expert key-point data, quality grading data, RAG document chunks, domain knowledge documents, terminology lexicons, and optional prebuilt vector databases. |
 | `figures/`         | Paper and README figures, including the motivation figure used near the top of this README. |
-| `result/`          | Generated experiment outputs, including grading/RAG result JSON files. |
+| `results/`          | Generated experiment outputs, including grading/RAG result JSON files. |
 | `requirements.txt` | Python dependency list.                                      |
 
 The core package is organized as:
