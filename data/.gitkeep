@@ -1,0 +1,8 @@
+# This directory contains data files:
+# - test_rag.json: Evaluation set for damage mode analysis
+# - test_grade.json: Original quality grading dataset
+# - test_grade_aug.json: Expanded quality grading dataset
+# - chunks_header.json: Knowledge chunks with header-based splitting
+# - chunks_hybrid.json: Knowledge chunks with hybrid splitting
+# - dict.txt: Domain terminology dictionary
+# - database/: Domain knowledge documents
