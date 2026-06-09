@@ -10,7 +10,7 @@ This repository contains the implementation of **SEIT-Agent**, an experience-mem
 ## Motivation
 
 <p align="center">
-  <img src="figures/motivation.png" width="850" alt="Motivation of SEIT-Agent">
+  <img src="figures/motivation.png" width="650" alt="Motivation of SEIT-Agent">
 </p>
 
 
