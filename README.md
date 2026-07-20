@@ -13,7 +13,6 @@ This repository contains the implementation of **SEIT-Agent**, an experience-mem
   <img src="figures/motivation.png" width="650" alt="Motivation of SEIT-Agent">
 </p>
 
-
 High-safety special equipment inspection involves two tightly coupled challenges: retrieving professional damage-mode knowledge from domain documents, and applying context-dependent inspection grading rules without parameter substitution errors. SEIT-Agent is designed to connect these two needs through domain RAG, deterministic grading tools, and experience memory for toolchain planning.
 
 ## Overview
@@ -34,14 +33,15 @@ The project also includes evaluation scripts for grading accuracy and for expert
 
 ## Repository Structure
 
-| Path               | Description                                                  |
-| ------------------ | ------------------------------------------------------------ |
-| `src/`             | Core SEIT-Agent library code, including agent orchestration, LLM provider configuration, RAG retrieval utilities, deterministic grading tools, experience memory logic, and evaluation metrics. |
-| `scripts/`         | Executable entry scripts for running damage mode analysis experiments, quality grading experiments, and evaluation workflows. |
-| `data/`            | Research datasets and knowledge resources, including damage-mode analysis data, expert key-point data, quality grading data, RAG document chunks, domain knowledge documents, terminology lexicons, and optional prebuilt vector databases. |
-| `figures/`         | Paper and README figures, including the motivation figure used near the top of this README. |
-| `results/`          | Generated experiment outputs, including grading/RAG result JSON files. |
-| `requirements.txt` | Python dependency list.                                      |
+| Path | Description |
+| --- | --- |
+| `src/` | Core SEIT-Agent library code, including agent orchestration, LLM provider configuration, RAG retrieval utilities, deterministic grading tools, experience memory logic, and evaluation metrics. |
+| `src/baselines/` | Baseline implementations for Tree-Mapped RAG (TM-RAG) and KG-Vector RAG (Graph RAG). |
+| `scripts/` | Executable entry scripts for running damage mode analysis experiments, quality grading experiments, and evaluation workflows. |
+| `data/` | Research datasets and knowledge resources, including damage-mode analysis data, expert key-point data, quality grading data, RAG document chunks, domain knowledge documents, terminology lexicons, and optional prebuilt vector databases. |
+| `figures/` | Paper and README figures, including the motivation figure used near the top of this README. |
+| `result/` | Generated experiment outputs, including grading/RAG result JSON files. |
+| `requirements.txt` | Python dependency list. |
 
 The core package is organized as:
 
@@ -52,10 +52,14 @@ src/
 ├── llm_config.py
 ├── tools_set.py
 ├── rag_base.py
+├── baselines/
+│   ├── common.py
+│   ├── tm_rag.py
+│   └── kg_vector_rag.py
 └── metric.py
 ```
 
-where `agent.py` implements the SEIT-Agent workflow and orchestration, `llm_config.py` manages model provider configuration, `tools_set.py` contains deterministic inspection grading tools, `rag_base.py` provides RAG indexing/retrieval/fusion/filtering utilities, and `metric.py` contains evaluation metrics and scoring utilities.
+where `agent.py` implements the SEIT-Agent workflow and orchestration, `llm_config.py` manages model provider configuration, `tools_set.py` contains deterministic inspection grading tools, `rag_base.py` provides RAG indexing/retrieval/fusion/filtering utilities, `baselines/` contains the TM-RAG and KG-Vector RAG baselines, and `metric.py` contains evaluation metrics and scoring utilities.
 
 Executable scripts are organized as:
 
@@ -63,10 +67,12 @@ Executable scripts are organized as:
 scripts/
 ├── run_damage_analysis.py
 ├── run_quality_grading.py
+├── run_tm_rag.py
+├── run_kg_vector_rag.py
 └── evaluate.py
 ```
 
-where `run_damage_analysis.py` runs damage-mode analysis experiments, `run_quality_grading.py` runs inspection quality grading experiments, and `evaluate.py` evaluates generated experiment outputs.
+where `run_damage_analysis.py` runs damage-mode analysis experiments, `run_quality_grading.py` runs inspection quality grading experiments, `run_tm_rag.py` and `run_kg_vector_rag.py` run the corresponding RAG baselines, and `evaluate.py` evaluates generated experiment outputs.
 
 ## Installation
 
@@ -91,6 +97,10 @@ In the implementation:
 - Vector retrieval uses `DashScopeEmbeddings` and Chroma.
 - Keyword retrieval uses BM25 with a domain dictionary.
 - Metadata filtering uses section headers to retain contextually relevant chunks.
+
+### RAG Baselines
+
+The repository also includes two baselines for damage mode analysis. **Tree-Mapped RAG (TM-RAG)** organizes source knowledge as a category-to-damage-mode-to-attribute tree and retrieves source-grounded attribute evidence. **KG-Vector RAG (Graph RAG)** constructs a knowledge graph from damage modes and related materials, equipment, influencing factors, inspection methods, and prevention measures, then ranks candidates using entity and relation matches. The released data package will include the parsed damage-mode records and exported tree/graph resources used by these baselines.
 
 ### Quality Grading Tools
 
@@ -136,6 +146,8 @@ memory_config = {
     "retention_strategy": "diversity",
 }
 ```
+
+The TM-RAG and KG-Vector RAG baselines can be run with `scripts/run_tm_rag.py` and `scripts/run_kg_vector_rag.py`, respectively.
 
 To switch LLM providers, edit `ACTIVE_LLM_PROVIDER` in `src/llm_config.py`. The available provider names are defined in `LLM_CONFIGS`.
 
